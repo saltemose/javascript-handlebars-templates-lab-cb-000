@@ -38,3 +38,35 @@ function displayEditForm() {
 
 
 }
+
+function getRecipeVals() {
+  var ingredientNodes = document.getElementById("ingredients");
+  var ingredients = []
+  for (var i=0; i<ingredientNodes.length; i++){
+    if(ingredientNodes[i].value !== ""){
+    ingredients.push(ingredientNodes[i].value);
+    }
+  }
+  var name = document.getElementById("name").value;
+  var description = document.getElementById("description").value;
+  var recipe = {name, ingredients, description};
+  return recipe;
+}
+
+function handlebarsSetup() {
+  Handlebars.registerHelper('displayIngredient',
+  function(ingredient) {
+    return new Handlebars.SafeString('<li name="ingredientsList>" + ingredient + "</li>"')
+  })
+  Handlebars.registerPartial('recipeDetailsPartial',
+  document.getElementById("recipe-details-partial").innerHTML
+  )
+  Handlebars.registerPartial('recipeFormPartial',
+  document.getElementById("recipe-form-partial").innerHTML)
+}
+
+function initForm() {
+  var template = 
+  Handlebars.compile(document.getElementById("recipe-form-template").innerHTML);
+  document.getElementById("main").innerHTML = template({"submitAction": "createREcipe()"});
+}
