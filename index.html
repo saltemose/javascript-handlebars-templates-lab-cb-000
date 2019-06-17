@@ -34,7 +34,8 @@
     <script id="recipe-template" type="text/x-handlebars-template">
       <article>
         <header><h2 id="nameHeader">{{name}}</h2></header>
-        <p><a id="edit-link" href="#" onclick="displayEditForm();">Edit Recipe</a></footer>
+        <p><a id="edit-link" href="#" onclick="displayEditForm();">Edit Recipe</a></p>
+        <div>{{> recipeDetailsPartial }}</div>
       </article>
     </script>
 
