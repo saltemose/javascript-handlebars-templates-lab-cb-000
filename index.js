@@ -41,8 +41,8 @@ function updateRecipe() {
 }
 
 function displayEditForm() {
-  var recipeName = document.getElementById("title").innerHTML;
-  var description = document.getElementById("description").innerHTML;
+  var recipeName = document.getElementById("title").innerText;
+  var description = document.getElementById("description").innerText;
   var ingredients = document.getElementsByClassName("ingredients");
 
   var array = [];
