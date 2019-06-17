@@ -66,7 +66,7 @@ function handlebarsSetup() {
 }
 
 function initForm() {
-  var template = 
+  var template =
   Handlebars.compile(document.getElementById("recipe-form-template").innerHTML);
   document.getElementById("main").innerHTML = template({"submitAction": "createREcipe()"});
 }
