@@ -40,7 +40,7 @@ function displayEditForm() {
 }
 
 function getRecipeVals() {
-  var ingredientNodes = document.getElementByName("ingredients");
+  var ingredientNodes = document.getElementsByName("ingredients");
   var ingredients = []
   for (var i=0; i<ingredientNodes.length; i++){
     if(ingredientNodes[i].value !== ""){
