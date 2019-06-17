@@ -45,7 +45,7 @@ function getRecipeVals() {
   for (var i=0; i<ingredientNodes.length; i++){
     ingredients.push(ingredientNodes[i].value);
   }
-  var name = document.getElementById("name").value;
+  var name = document.getElementById("recipe-name").value;
   var description = document.getElementById("description").value;
   var recipe = {name, ingredients, description};
   return recipe;
