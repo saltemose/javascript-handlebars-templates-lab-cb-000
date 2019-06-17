@@ -1,71 +1,56 @@
 function init() {
-  //put any page initialization/handlebars initialization here
-  handlebarsSetup();
-  initForm();
+  Handlebars.registerHelper("displayIngredient", function(ingredient) {
+    return new Handlebars.SafeString(ingredient);
+  });
+  Handlebars.registerPartial('recipeDetailsPartial', document.getElementById("recipe-details-partial").innerHTML)
+  Handlebars.registerPartial('recipeFormPartial', document.getElementById("recipe-form-partial").innerHTML)
+
+  var formTemplate = document.getElementById("recipe-form-template");
+  var template = Handlebars.compile(formTemplate.innerHTML);
+
+  document.getElementById("main").innerHTML = template({ submitAction: "createRecipe()" });
 }
+
 document.addEventListener("DOMContentLoaded", function(event) {
   init()
 })
 
 function createRecipe() {
-  var recipe = getRecipeVals();
+  var recipeName = document.getElementsByName("recipe-name")[0].value;
+  var description = document.getElementsByName("description")[0].value;
+  var ingredients = document.getElementsByName("ingredients");
+  var array = [];
+  for (var i = 0; i < ingredients.length; i++) {
+    array.push(ingredients[i].value);
+  }
 
-  var recipeTemplate = document.getElementById("recipe-template").innerHTML;
-
-  var template = Handlebars.compile(recipeTemplate);
-  document.getElementById('main').innerHTML = template(recipe);
+  var template = Handlebars.compile(document.getElementById("recipe-template").innerHTML);
+  document.getElementById("main").innerHTML = template({ name: recipeName, description: description, ingredients: array })
 }
 
 function updateRecipe() {
-  var recipe = getRecipeVals();
-  var recipeTemplate = document.getElementById("recipe-template").innerHTML;
-  var template = Handlebars.compile(recipeTemplate);
-  document.getElementById("main").innerHTML = template(recipe);
+  var recipeName = document.getElementsByName("recipe-name")[0].value;
+  var description = document.getElementsByName("description")[0].value;
+  var ingredients = document.getElementsByName("ingredients");
+  var array = [];
+  for (var i = 0; i < ingredients.length; i++) {
+    array.push(ingredients[i].value);
+  }
+  var template = Handlebars.compile(document.getElementById("recipe-template").innerHTML);
+  document.getElementById("main").innerHTML = template({ name: recipeName, description: description, ingredients: array });
 }
 
 function displayEditForm() {
-  var name = document.getElementById("nameHeader").innerHTML;
-  var description = document.getElementById("recipeDescription").innerHTML;
-  var ingredientNodes = document.getElementsByName("ingredientsList");
-  var ingredients = []
-  for (var i=0; i<ingredientNodes.length; i++){
-    ingredients.push(ingredientNodes[i].innerText);
+  var recipeName = document.getElementById("title").innerText;
+  var description = document.getElementById("description").innerText;
+  var ingredients = document.getElementsByClassName("ingredients");
+
+  var array = [];
+  for (var i = 0; i < ingredients.length; i++) {
+    array.push(ingredients[i].innerText);
   }
-  var recipe = {name, description, ingredients, submitAction: 'createRecipe()'};
-  var recipeFormTemplate = document.getElementById("recipe-form-template").innerHTML;
-  var template = Handlebars.compile(recipeFormTemplate);
-  document.getElementById("main").innerHTML = template(recipe);
 
-
-}
-
-function getRecipeVals() {
-  var ingredientNodes = document.getElementsByName("ingredients");
-  var ingredients = [];
-  for (var i=0; i<ingredientNodes.length; i++){
-    ingredients.push(ingredientNodes[i].value);
-  }
-  var name = document.getElementById("recipe-name").value;
-  var description = document.getElementById("description").value;
-  var recipe = {name, ingredients, description};
-  return recipe;
-}
-
-function handlebarsSetup() {
-  Handlebars.registerHelper('displayIngredient',
-  function(ingredient) {
-    return new Handlebars.SafeString('<li name="ingredientsList>" + ingredient + "</li>"')
-  })
-  Handlebars.registerPartial('recipeDetailsPartial',
-  document.getElementById("recipe-details-partial").innerHTML
-  )
-  Handlebars.registerPartial('recipeFormPartial',
-  document.getElementById("recipe-form-partial").innerHTML)
-}
-
-function initForm() {
   var formTemplate = document.getElementById("recipe-form-template");
-  var template =
-  Handlebars.compile(formTemplate.innerHTML);
-  document.getElementById("main").innerHTML = template({submitAction: "createRecipe()"});
+  var template = Handlebars.compile(formTemplate.innerHTML);
+  document.getElementById("main").innerHTML = template({ name: recipeName, description: description, ingredients: array, submitAction: "updateRecipe()"});
 }
